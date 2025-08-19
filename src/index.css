@@ -199,6 +199,32 @@ All colors MUST be HSL.
     @apply border-success focus:ring-success/20 focus:border-success;
   }
 
+  /* Custom styles for react-phone-number-input */
+  .PhoneInput {
+    @apply relative w-full;
+  }
+
+  .PhoneInputInput {
+    @apply input-field w-full !important;
+    padding-left: 3.5rem !important; /* Adjust padding to not overlap the flag */
+  }
+
+  .PhoneInputCountry {
+    @apply absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center;
+  }
+
+  .PhoneInputCountryIcon {
+    width: 22px !important; /* Reduced flag size */
+    height: auto !important;
+    box-shadow: none !important;
+    border-radius: 3px;
+  }
+
+  .PhoneInputCountrySelectArrow {
+    opacity: 0.8;
+    margin-left: 6px;
+  }
+
   .gradient-text {
     @apply bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent;
     background-size: 200% 200%;

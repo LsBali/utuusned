@@ -9,8 +9,6 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, Filter, Download, RefreshCw } from 'lucide-react';
 
 const departmentOptions = ['All', 'Engineering', 'Design', 'Marketing', 'HR', 'Sales', 'Data Science', 'Product'];
-const leaveTypeOptions = ['All', 'Casual', 'Sick', 'Earned', 'WFH', 'Maternity', 'Paternity', 'Bereavement'];
-const priorityOptions = ['All', 'Low', 'Medium', 'High', 'Critical'];
 const statusOptions = ['All', 'Pending', 'Approved', 'Rejected', 'Cancelled'];
 
 interface AnalyticsFiltersProps {
@@ -18,12 +16,8 @@ interface AnalyticsFiltersProps {
     startDate: string;
     endDate: string;
     department: string;
-    leaveType: string;
-    priority: string;
+    name: string;
     status: string;
-    showTrends: boolean;
-    showViolations: boolean;
-    showEngagement: boolean;
   };
   setFilters: React.Dispatch<React.SetStateAction<any>>;
   onApply: () => void;
@@ -83,8 +77,18 @@ export const AnalyticsFilters: React.FC<AnalyticsFiltersProps> = ({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
-          <div className="grid w-full max-w-sm items-center gap-1.5">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+          <div className="grid w-full items-center gap-1.5">
+            <Label htmlFor="name">Name</Label>
+            <Input 
+              type="text" 
+              id="name" 
+              placeholder="Enter name"
+              value={filters.name} 
+              onChange={e => setFilters({ ...filters, name: e.target.value })} 
+            />
+          </div>
+          <div className="grid w-full items-center gap-1.5">
             <Label htmlFor="start-date" className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
               Start Date
@@ -96,7 +100,7 @@ export const AnalyticsFilters: React.FC<AnalyticsFiltersProps> = ({
               onChange={e => setFilters({ ...filters, startDate: e.target.value })} 
             />
           </div>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
+          <div className="grid w-full items-center gap-1.5">
             <Label htmlFor="end-date" className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
               End Date
@@ -108,7 +112,7 @@ export const AnalyticsFilters: React.FC<AnalyticsFiltersProps> = ({
               onChange={e => setFilters({ ...filters, endDate: e.target.value })} 
             />
           </div>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
+          <div className="grid w-full items-center gap-1.5">
             <Label>Department</Label>
             <Select value={filters.department} onValueChange={value => setFilters({ ...filters, department: value })} >
               <SelectTrigger>
@@ -121,33 +125,7 @@ export const AnalyticsFilters: React.FC<AnalyticsFiltersProps> = ({
               </SelectContent>
             </Select>
           </div>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label>Leave Type</Label>
-            <Select value={filters.leaveType} onValueChange={value => setFilters({ ...filters, leaveType: value })} >
-              <SelectTrigger>
-                <SelectValue placeholder="Select Leave Type" />
-              </SelectTrigger>
-              <SelectContent>
-                {leaveTypeOptions.map(option => (
-                  <SelectItem key={option} value={option}>{option}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label>Priority</Label>
-            <Select value={filters.priority} onValueChange={value => setFilters({ ...filters, priority: value })} >
-              <SelectTrigger>
-                <SelectValue placeholder="Select Priority" />
-              </SelectTrigger>
-              <SelectContent>
-                {priorityOptions.map(option => (
-                  <SelectItem key={option} value={option}>{option}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
+          <div className="grid w-full items-center gap-1.5">
             <Label>Status</Label>
             <Select value={filters.status} onValueChange={value => setFilters({ ...filters, status: value })} >
               <SelectTrigger>
@@ -162,39 +140,12 @@ export const AnalyticsFilters: React.FC<AnalyticsFiltersProps> = ({
           </div>
         </div>
 
-        {/* Toggle Filters */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 pt-4 border-t">
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="show-trends"
-              checked={filters.showTrends}
-              onCheckedChange={(checked) => setFilters({ ...filters, showTrends: checked })}
-            />
-            <Label htmlFor="show-trends">Show Trend Analysis</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="show-violations"
-              checked={filters.showViolations}
-              onCheckedChange={(checked) => setFilters({ ...filters, showViolations: checked })}
-            />
-            <Label htmlFor="show-violations">Show Policy Violations</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="show-engagement"
-              checked={filters.showEngagement}
-              onCheckedChange={(checked) => setFilters({ ...filters, showEngagement: checked })}
-            />
-            <Label htmlFor="show-engagement">Show Engagement Metrics</Label>
-          </div>
-        </div>
 
         <div className="flex justify-between items-center mt-4 pt-4 border-t">
           <Button variant="outline" onClick={onReset}>
             Reset Filters
           </Button>
-          <Button onClick={onApply} className="flex items-center gap-2">
+          <Button onClick={onApply} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white">
             <Filter className="h-4 w-4" />
             Apply Filters
           </Button>

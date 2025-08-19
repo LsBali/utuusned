@@ -198,11 +198,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onBack }) => {
               )}
             </Button>
 
-            <div className="text-center">
+            <div className="text-center space-y-2">
               <p className="text-sm text-muted-foreground">
                 Don't have an account?{' '}
                 <a href="/signup" className="text-primary hover:text-primary-dark font-medium transition-colors">
                   Create one
+                </a>
+              </p>
+              <p className="text-sm text-muted-foreground">
+                <a href="/forgot-password" className="text-primary hover:text-primary-dark font-medium transition-colors">
+                  Forgot Password?
                 </a>
               </p>
             </div>

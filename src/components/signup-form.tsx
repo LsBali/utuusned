@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { InputField } from '@/components/ui/input-field';
 import { SelectField } from '@/components/ui/select-field';
+import { PhoneField } from '@/components/ui/phone-field';
+import { isValidPhoneNumber } from 'react-phone-number-input';
 import { PasswordStrength } from '@/components/ui/password-strength';
 import { Button } from '@/components/ui/button';
 
@@ -51,6 +53,9 @@ const signupSchema = Yup.object().shape({
     .min(2, 'Department must be at least 2 characters')
     .max(50, 'Department must be less than 50 characters')
     .required('Department is required'),
+  phoneNumber: Yup.string()
+    .test('is-valid-phone', 'Phone number is not valid', value => !value || isValidPhoneNumber(value))
+    .required('Phone number is required'),
 });
 
 interface FormValues {
@@ -62,6 +67,7 @@ interface FormValues {
   confirmPassword: string;
   role: string;
   department: string;
+  phoneNumber: string;
 }
 
 interface SignupFormProps {
@@ -101,6 +107,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onBack }) => {
     confirmPassword: '',
     role: 'employee',
     department: '',
+    phoneNumber: '',
   };
 
   const handleSubmit = async (values: FormValues) => {
@@ -230,140 +237,152 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onBack }) => {
               </p>
             </div>
 
-            {/* Name fields stacked vertically */}
-            <div className="space-y-4">
-              <Field name="firstName">
-                {({ field }: any) => (
-                  <InputField
-                    {...field}
-                    id="firstName"
-                    label="First Name"
-                    placeholder="Enter your first name"
-                    icon={<User size={18} />}
-                    error={touched.firstName && errors.firstName ? errors.firstName : undefined}
-                    required
-                  />
-                )}
-              </Field>
-              
-              <Field name="middleName">
-                {({ field }: any) => (
-                  <InputField
-                    {...field}
-                    id="middleName"
-                    label="Middle Name"
-                    placeholder="Enter your middle name"
-                    icon={<User size={18} />}
-                    error={touched.middleName && (errors as any).middleName ? (errors as any).middleName : undefined}
-                    required
-                  />
-                )}
-              </Field>
-              
-              <Field name="lastName">
-                {({ field }: any) => (
-                  <InputField
-                    {...field}
-                    id="lastName"
-                    label="Last Name"
-                    placeholder="Enter your last name"
-                    icon={<User size={18} />}
-                    error={touched.lastName && errors.lastName ? errors.lastName : undefined}
-                    required
-                  />
-                )}
-              </Field>
-            </div>
-
-            {/* Email Field */}
-            <Field name="email">
-              {({ field }: any) => (
-                <InputField
-                  {...field}
-                  id="email"
-                  type="email"
-                  label="Email Address"
-                  placeholder="Enter your email address"
-                  icon={<Mail size={18} />}
-                  error={touched.email && errors.email ? errors.email : undefined}
-                  required
-                />
-              )}
-            </Field>
-
-            {/* Role Field */}
-            <Field name="role">
-              {({ field }: any) => (
-                <SelectField
-                  {...field}
-                  id="role"
-                  label="Role"
-                  icon={<UserCheck size={18} />}
-                  options={roleOptions}
-                  error={touched.role && errors.role ? errors.role : undefined}
-                  required
-                />
-              )}
-            </Field>
-
-            {/* Department Field */}
-            <Field name="department">
-              {({ field }: any) => (
-                <SelectField
-                  {...field}
-                  id="department"
-                  label="Department"
-                  icon={<Building size={18} />}
-                  options={departmentOptions}
-                  error={touched.department && errors.department ? errors.department : undefined}
-                  required
-                />
-              )}
-            </Field>
-
-            {/* Password Field */}
-            <Field name="password">
-              {({ field }: any) => (
-                <div className="space-y-3">
-                  <InputField
-                    {...field}
-                    id="password"
-                    type="password"
-                    label="Password"
-                    placeholder="Create a strong password"
-                    icon={<Lock size={18} />}
-                    showPasswordToggle
-                    error={touched.password && errors.password ? errors.password : undefined}
-                    required
-                  />
-                  
-                  {values.password && (
-                    <PasswordStrength 
-                      password={values.password} 
-                      className="animate-fade-in"
+            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-8 gap-y-4 md:gap-y-6">
+              {/* Column 1 */}
+              <div className="space-y-4 md:space-y-6">
+                <Field name="firstName">
+                  {({ field }: any) => (
+                    <InputField
+                      {...field}
+                      id="firstName"
+                      label="First Name"
+                      placeholder="Enter your first name"
+                      icon={<User size={18} />}
+                      error={touched.firstName && errors.firstName ? errors.firstName : undefined}
+                      required
                     />
                   )}
-                </div>
-              )}
-            </Field>
+                </Field>
+                
+                <Field name="middleName">
+                  {({ field }: any) => (
+                    <InputField
+                      {...field}
+                      id="middleName"
+                      label="Middle Name"
+                      placeholder="Enter your middle name"
+                      icon={<User size={18} />}
+                      error={touched.middleName && (errors as any).middleName ? (errors as any).middleName : undefined}
+                      required
+                    />
+                  )}
+                </Field>
+                
+                <Field name="lastName">
+                  {({ field }: any) => (
+                    <InputField
+                      {...field}
+                      id="lastName"
+                      label="Last Name"
+                      placeholder="Enter your last name"
+                      icon={<User size={18} />}
+                      error={touched.lastName && errors.lastName ? errors.lastName : undefined}
+                      required
+                    />
+                  )}
+                </Field>
 
-            {/* Confirm Password Field */}
-            <Field name="confirmPassword">
-              {({ field }: any) => (
-                <InputField
-                  {...field}
-                  id="confirmPassword"
-                  type="password"
-                  label="Confirm Password"
-                  placeholder="Confirm your password"
-                  icon={<Lock size={18} />}
-                  showPasswordToggle
-                  error={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : undefined}
-                  success={values.confirmPassword && values.password === values.confirmPassword && !errors.confirmPassword}
-                  required
-                />
-              )}
-            </Field>
+                <Field name="email">
+                  {({ field }: any) => (
+                    <InputField
+                      {...field}
+                      id="email"
+                      type="email"
+                      label="Email Address"
+                      placeholder="Enter your email address"
+                      icon={<Mail size={18} />}
+                      error={touched.email && errors.email ? errors.email : undefined}
+                      required
+                    />
+                  )}
+                </Field>
+
+                <Field name="phoneNumber">
+                  {({ field, form }: any) => (
+                    <PhoneField
+                      label="Phone Number"
+                      value={field.value}
+                      onChange={(value: string) => form.setFieldValue(field.name, value)}
+                      error={touched.phoneNumber && errors.phoneNumber ? (errors as any).phoneNumber : undefined}
+                      required
+                    />
+                  )}
+                </Field>
+              </div>
+
+              {/* Column 2 */}
+              <div className="space-y-4 md:space-y-6">
+                <Field name="role">
+                  {({ field }: any) => (
+                    <SelectField
+                      {...field}
+                      id="role"
+                      label="Role"
+                      icon={<UserCheck size={18} />}
+                      options={roleOptions}
+                      error={touched.role && errors.role ? errors.role : undefined}
+                      required
+                    />
+                  )}
+                </Field>
+
+                <Field name="department">
+                  {({ field }: any) => (
+                    <SelectField
+                      {...field}
+                      id="department"
+                      label="Department"
+                      icon={<Building size={18} />}
+                      options={departmentOptions}
+                      error={touched.department && errors.department ? errors.department : undefined}
+                      required
+                    />
+                  )}
+                </Field>
+
+                <Field name="password">
+                  {({ field }: any) => (
+                    <div className="space-y-3">
+                      <InputField
+                        {...field}
+                        id="password"
+                        type="password"
+                        label="Password"
+                        placeholder="Create a strong password"
+                        icon={<Lock size={18} />}
+                        showPasswordToggle
+                        error={touched.password && errors.password ? errors.password : undefined}
+                        required
+                      />
+                      
+                      {values.password && (
+                        <PasswordStrength 
+                          password={values.password} 
+                          className="animate-fade-in"
+                        />
+                      )}
+                    </div>
+                  )}
+                </Field>
+
+                <Field name="confirmPassword">
+                  {({ field }: any) => (
+                    <InputField
+                      {...field}
+                      id="confirmPassword"
+                      type="password"
+                      label="Confirm Password"
+                      placeholder="Confirm your password"
+                      icon={<Lock size={18} />}
+                      showPasswordToggle
+                      error={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : undefined}
+                      success={values.confirmPassword && values.password === values.confirmPassword && !errors.confirmPassword}
+                      required
+                    />
+                  )}
+                </Field>
+              </div>
+            </div>
           </div>
 
           {/* Submit Button */}

@@ -501,32 +501,7 @@ const Dashboard: React.FC = () => {
                     </CardContent>
                   </Card>
                   
-                  <Card className="border-l-4 border-l-green-500">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">Approval Rate</CardTitle>
-                      <CheckCircle2 className="h-4 w-4 text-green-500" />
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-green-600">
-                        {Math.round((monthlyTrends.reduce((sum, month) => sum + month.approvals, 0) / 
-                          monthlyTrends.reduce((sum, month) => sum + month.requests, 0)) * 100)}%
-                      </div>
-                      <p className="text-xs text-muted-foreground">Overall success rate</p>
-                    </CardContent>
-                  </Card>
                   
-                  <Card className="border-l-4 border-l-orange-500">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">Avg Process Time</CardTitle>
-                      <Clock className="h-4 w-4 text-orange-500" />
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-orange-600">
-                        {(monthlyTrends.reduce((sum, month) => sum + month.avgProcessTime, 0) / monthlyTrends.length).toFixed(1)} days
-                      </div>
-                      <p className="text-xs text-muted-foreground">Monthly average</p>
-                    </CardContent>
-                  </Card>
                   
                   <Card className="border-l-4 border-l-purple-500">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -541,27 +516,6 @@ const Dashboard: React.FC = () => {
                     </CardContent>
                   </Card>
                 </div>
-                {/* Real-time Status Indicator */}
-                <Card className="border-l-4 border-l-green-500">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-2">
-                          <Activity className="h-5 w-5 text-green-500" />
-                          <span className="font-medium">Real-time Analytics</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                          <span className="text-sm text-muted-foreground">Live</span>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm font-medium">System Status</div>
-                        <div className="text-xs text-green-600">All systems operational</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
 
 
                 {/* Enhanced Charts */}
@@ -619,27 +573,6 @@ const Dashboard: React.FC = () => {
                     </CardContent>
                   </Card>
 
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Department Satisfaction</CardTitle>
-                      <CardDescription>Employee satisfaction scores by department.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="h-80">
-                      <ChartContainer config={{ 
-                        satisfaction: { label: "Satisfaction Score", color: "#3B82F6" }
-                      }} className="h-full">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={filteredData.departmentMetrics} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="department" />
-                            <YAxis domain={[3.5, 5]} />
-                            <ChartTooltip content={<ChartTooltipContent />} />
-                            <Bar dataKey="satisfaction" fill="#3B82F6" radius={[2,2,0,0]} />
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </ChartContainer>
-                    </CardContent>
-                  </Card>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

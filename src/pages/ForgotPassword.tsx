@@ -1,9 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { SignupForm } from '@/components/signup-form';
+import { ForgotPasswordForm } from '@/components/forgot-password-form';
 import DecorShapes from '@/components/decor-shapes';
 
-const Signup: React.FC = () => {
+const ForgotPassword: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-background via-form-background to-background flex items-center justify-center p-4 overflow-hidden">
       {/* Background Pattern */}
@@ -16,31 +16,12 @@ const Signup: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative w-full max-w-4xl"
+        className="relative w-full max-w-md"
       >
         {/* Form Container */}
         <div className="form-container p-8 space-y-6">
-          <SignupForm />
+          <ForgotPasswordForm />
         </div>
-        
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-8 text-center"
-        >
-          <p className="text-xs text-muted-foreground">
-            By creating an account, you agree to our{' '}
-            <a href="/terms" className="text-primary hover:text-primary-dark transition-colors">
-              Terms of Service
-            </a>{' '}
-            and{' '}
-            <a href="/privacy" className="text-primary hover:text-primary-dark transition-colors">
-              Privacy Policy
-            </a>
-          </p>
-        </motion.div>
       </motion.div>
       
       {/* Decorative Elements */}
@@ -49,4 +30,4 @@ const Signup: React.FC = () => {
   );
 };
 
-export default Signup;
+export default ForgotPassword;
